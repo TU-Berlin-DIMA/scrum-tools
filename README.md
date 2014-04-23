@@ -1,18 +1,18 @@
-scrum-cli-tools
-===============
+scrum-tools
+===========
 
-A set of CLI tools for batch management of Scrum infrastructure (GitHub, Trello).
+A set of tools for batch management of Scrum infrastructure.
+
+Provides simple wrappers for mass management of:
+
+ * code repositories on [Github](https://github.com);
+ * organizations and boards on [Trello](https://trello.com).
 
 Installation
 ------------
 
-``` bash
-# Install Python dependencies
-pip install cement     # Cement CLI application framework
-pip install colorama   # Colorama colored terminal
-pip install trello     # Trello API client (v0.9.1)
-pip install pygithub3  # Github API client (v3)
+Using [PIP](https://pypi.python.org/pypi/pip):
 
-# Install Scrum CLI tools
-git clone git@github.com:TU-Berlin-DIMA/scrum-cli.git
+``` bash
+pip install git+git://github.com/TU-Berlin-DIMA/scrum-tools.git@master
 ```

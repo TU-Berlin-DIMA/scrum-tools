@@ -1,3 +1,9 @@
+# Idea project files
+.idea
+
+# Config file
+.scrum-tools.conf
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -18,6 +24,7 @@ lib64/
 parts/
 sdist/
 var/
+out/
 *.egg-info/
 .installed.cfg
 *.egg

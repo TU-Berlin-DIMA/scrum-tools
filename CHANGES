@@ -1,0 +1,4 @@
+2014-04-23 Alexander Alexandrov <alexander.alexandrov@tu-berlin.de> -- 0.0.1
+
+    * Fixed an issue with styleMap having effects on other maps when there are
+      several widgets on the same page.
