@@ -9,11 +9,11 @@ setup(
     package_dir={'': 'src/main/python'},
     scripts=['src/main/scripts/scrum-tools'],
     install_requires=[
-        'cement>=2.2',        # Cement CLI application framework
-        'termcolor>=1.1.0',   # Termcolor colored terminal
-        'trello>=0.9.1',      # Trello API client
+        'argcomplete>=0.8.0',  # Argcomplete argument completion
+        'cement>=2.2',  # Cement CLI application framework
         'github3.py>=0.8.2',  # Github API client
-        'argcomplete>=0.8.0'  # Argcomplete argument completion
+        'termcolor>=1.1.0',  # Termcolor colored terminal
+        'trello>=0.9.1',  # Trello API client
     ],
     url='https://github.com/TU-Berlin-DIMA/scrum-tools',
     license='Apache v2 Licence, see LICENCE file',
@@ -30,4 +30,3 @@ setup(
         'Topic :: Software Development',
     ]
 )
-

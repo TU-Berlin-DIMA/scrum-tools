@@ -28,6 +28,9 @@ class BaseController(controller.CementBaseController):
         config_defaults = dict(
             users_file=None,
             users_schema=None,
+            users_file_skip_first=False,
+            users_file_delimiter=';',
+            users_file_escape_char=None,
         )
 
     @controller.expose(hide=True)

@@ -19,12 +19,17 @@ Created on Apr 13, 2014
 import sys
 
 from termcolor import cprint, colored
-
 from cement.core import controller
 # noinspection PyPackageRequirements
 from github3 import login, models
 
-from scrumtools import error
+from scrumtools import data, error
+
+
+try:
+    prompt = raw_input
+except NameError:
+    prompt = input
 
 
 class GitHubController(controller.CementBaseController):
@@ -43,15 +48,12 @@ class GitHubController(controller.CementBaseController):
         )
 
         arguments = [
-            (['-U', '--users-file'], dict(action='store',
-                                          metavar='FILE',
-                                          dest='users_file',
-                                          help='a CSV file listing all users')),
-            (['-S', '--users-schema'], dict(action='store',
-                                            nargs='+',
-                                            metavar='COLUMN',
-                                            dest='users_schema',
-                                            help='column schema for the users CSV file')),
+            (['-U', '--users-file'],
+             dict(action='store', metavar='FILE', dest='users_file',
+                  help='a CSV file listing all users')),
+            (['-S', '--users-schema'],
+             dict(action='store', nargs='+', metavar='COLUMN', dest='users_schema',
+                  help='column schema for the users CSV file')),
         ]
 
     @controller.expose(hide=True)
@@ -68,9 +70,9 @@ class GitHubController(controller.CementBaseController):
         if not self.app.config.get('github', 'github_secret'):
             raise error.ConfigError("Missing config parameter 'github.github_secret'!")
 
-        (username, password) = self.__class__ .__login_prompt()
+        (username, password) = self.__class__.__login_prompt()
         try:
-            gh = login(username, password)
+            gh = login(username, password, two_factor_callback=self.__class__.two_factor_login_prompt)
             au = gh.authorize(username,
                               password,
                               client_id=self.app.config.get('github', 'github_key'),
@@ -82,22 +84,25 @@ class GitHubController(controller.CementBaseController):
         except models.GitHubError as e:
             raise RuntimeError(e.msg)
 
+    @controller.expose(help="Validate the provided GitHub account names.")
+    def validate_users(self):
+        user_repository = data.UserRepository(self.app.config)
+        for user in user_repository.users():
+            print "%s: [%50s] [%50s] %s %s" % (user['Group'],
+                                               user['Github'],
+                                               user['Trello'],
+                                               user['Name'],
+                                               user['Surname'])
+
     @controller.expose(help="Creates a bunch of GitHub repositories.")
     def create_repos(self):
-        self.app.log.info("Inside base.create_repos function.")
-
-        print self.app.config.get('core', 'users_schema')
+        pass
 
     @staticmethod
     def __login_prompt():
         import getpass
 
-        try:
-            getinput = raw_input
-        except NameError:
-            getinput = input
-
-        u = getinput("GitHub username [%s]: " % getpass.getuser())
+        u = prompt("GitHub username [%s]: " % getpass.getuser())
         if not u:
             u = getpass.getuser()
 
@@ -109,3 +114,10 @@ class GitHubController(controller.CementBaseController):
             p1, p2 = password_prompt()
 
         return u, p1
+
+    @staticmethod
+    def two_factor_login_prompt():
+        code = ''
+        while not code:
+            code = prompt('Enter 2FA code: ')
+        return code

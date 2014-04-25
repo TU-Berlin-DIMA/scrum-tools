@@ -21,18 +21,18 @@ Created on Apr 13, 2014
 import sys
 import os
 
-########################################################################################################################
+# #######################################################################################################################
 # Determine paths
-########################################################################################################################
+# #######################################################################################################################
 
 if 'HOME' in os.environ:
     user_home = os.path.abspath(os.environ['HOME'])
 else:
     user_home = os.path.abspath(os.path.expanduser('~'))
 
-########################################################################################################################
+# #######################################################################################################################
 # Sources path configuration
-########################################################################################################################
+# #######################################################################################################################
 
 try:
     file_name = os.readlink(__file__)
@@ -43,13 +43,13 @@ base_path = os.path.dirname(os.path.dirname((os.path.abspath(file_name))))
 if os.path.isdir(os.path.join(base_path, 'python')):
     sys.path.append(os.path.join(base_path, 'python'))
 
-########################################################################################################################
+# #######################################################################################################################
 # Cement Application
-########################################################################################################################
+# #######################################################################################################################
 
 import argcomplete
 from termcolor import cprint
-from cement.core import foundation, handler, exc
+from cement.core import foundation, exc, handler, hook
 from scrumtools import base, github, trello
 
 
@@ -68,6 +68,15 @@ class App(foundation.CementApp):
 
 # create the app
 app = App()
+
+
+def normalize_file_schema(app):
+    schema = app.config.get('core', 'users_schema')
+    schema = [x.strip() for x in schema.split(';')] if isinstance(schema, basestring) else schema
+    app.config.set('core', 'users_schema', schema)
+
+
+hook.register('post_argument_parsing', normalize_file_schema)
 
 try:
     # Register any handlers that aren't passed directly to CementApp
@@ -88,7 +97,6 @@ except exc.CaughtSignal as e:
     if e.signum == 2:
         print >> sys.stderr, ""
         cprint("Interrupted execution." % e, 'red', attrs=['bold'], file=sys.stderr)
-finally:
-    # close the app
+finally:  # close the app
     app.close()
 
