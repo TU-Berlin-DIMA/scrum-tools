@@ -21,18 +21,18 @@ Created on Apr 13, 2014
 import sys
 import os
 
-# #######################################################################################################################
+# ######################################################################################################################
 # Determine paths
-# #######################################################################################################################
+# ######################################################################################################################
 
 if 'HOME' in os.environ:
     user_home = os.path.abspath(os.environ['HOME'])
 else:
     user_home = os.path.abspath(os.path.expanduser('~'))
 
-# #######################################################################################################################
+# ######################################################################################################################
 # Sources path configuration
-# #######################################################################################################################
+# ######################################################################################################################
 
 try:
     file_name = os.readlink(__file__)
@@ -43,9 +43,9 @@ base_path = os.path.dirname(os.path.dirname((os.path.abspath(file_name))))
 if os.path.isdir(os.path.join(base_path, 'python')):
     sys.path.append(os.path.join(base_path, 'python'))
 
-# #######################################################################################################################
+# ######################################################################################################################
 # Cement Application
-# #######################################################################################################################
+# ######################################################################################################################
 
 import argcomplete
 from termcolor import cprint
@@ -66,15 +66,15 @@ class App(foundation.CementApp):
         ]
 
 
-# create the app
-app = App()
-
-
+# noinspection PyShadowingNames
 def normalize_file_schema(app):
+    delimiter = app.config.get('core', 'users_file_delimiter')
     schema = app.config.get('core', 'users_schema')
-    schema = [x.strip() for x in schema.split(';')] if isinstance(schema, basestring) else schema
+    schema = [x.strip() for x in schema.split(delimiter)] if isinstance(schema, str) else schema
     app.config.set('core', 'users_schema', schema)
 
+# create the app
+app = App()
 
 hook.register('post_argument_parsing', normalize_file_schema)
 

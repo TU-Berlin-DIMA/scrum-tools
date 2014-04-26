@@ -93,10 +93,10 @@ class UserRepository:
         self.__file_skip_first = config.getboolean('core', 'users_file_skip_first')
         # CSV schema config
         self.__schema = config.get('core', 'users_schema')
-        self.__schema_key_group = config.get('core', 'users_schema_key_group')
-        self.__schema_key_id = config.get('core', 'users_schema_key_id')
-        self.__schema_key_github = config.get('core', 'users_schema_key_github')
-        self.__schema_key_trello = config.get('core', 'users_schema_key_trello')
+        self.__key_group = config.get('core', 'users_schema_key_group')
+        self.__key_id = config.get('core', 'users_schema_key_id')
+        self.__key_github = config.get('core', 'users_schema_key_github')
+        self.__key_trello = config.get('core', 'users_schema_key_trello')
 
         # sanitize input
         self.__file_quotechar = self.__file_quotechar if self.__file_quotechar else None
@@ -104,11 +104,21 @@ class UserRepository:
 
         # read users from CSV file
         self.__users = [u for u in self.__read()]
-        self.__users.sort(key=lambda x: x[self.__schema_key_group])
+        self.__users.sort(key=lambda x: x[self.__key_group])
 
-    def users(self):
+        # create groups
+        self.__groups = sorted(set([u[self.__key_group] for u in self.__users if u[self.__key_group] != '']))
+
+    def users(self, f=None):
         for u in self.__users:
-            yield u
+            if not f:
+                yield u
+            elif f(u):
+                yield u
+
+    def groups(self):
+        for g in self.__groups:
+            yield g
 
     def __read(self):
         with open(self.__file, 'rb') as f:

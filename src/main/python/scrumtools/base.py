@@ -26,11 +26,17 @@ class BaseController(controller.CementBaseController):
 
         config_section = 'core'
         config_defaults = dict(
+            # input format
             users_file=None,
-            users_schema=None,
             users_file_skip_first=False,
             users_file_delimiter=';',
             users_file_escape_char=None,
+            # input schema
+            users_schema='ID;Group;Github;Trello',
+            users_schema_key_id='ID',
+            users_schema_key_group='Group',
+            users_schema_key_github='Github',
+            users_schema_key_trello='Trello',
         )
 
     @controller.expose(hide=True)
