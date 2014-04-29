@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='scrum-tools',
-    version='0.0.1',
+    version='0.1.0',
     author=u'Alexander Alexandrov',
     author_email='alexander.alexandrov@tu-berlin.de',
     packages=['scrumtools'],

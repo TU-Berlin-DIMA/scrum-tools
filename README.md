@@ -14,7 +14,7 @@ Installation
 Using [PIP](https://pypi.python.org/pypi/pip):
 
 ``` bash
-pip install git+git://github.com/TU-Berlin-DIMA/scrum-tools.git@master
+pip install scrum-tools
 ```
 
 Usage
