@@ -68,10 +68,14 @@ class App(foundation.CementApp):
 
 # noinspection PyShadowingNames
 def normalize_file_schema(app):
-    delimiter = app.config.get('core', 'users_file_delimiter')
+    # make sure that 'core.users_schema' is a list
     schema = app.config.get('core', 'users_schema')
-    schema = [x.strip() for x in schema.split(delimiter)] if isinstance(schema, str) else schema
+    schema = [x.strip() for x in schema.split(';')] if isinstance(schema, str) else schema
     app.config.set('core', 'users_schema', schema)
+    # make sure that 'trello.board_lists' is a list
+    board_lists = app.config.get('trello', 'board_lists')
+    board_lists = [x.strip() for x in board_lists.split(';')] if isinstance(board_lists, str) else board_lists
+    app.config.set('trello', 'board_lists', board_lists)
 
 # create the app
 app = App()

@@ -16,6 +16,8 @@ limitations under the License.
 Created on Apr 13, 2014
 """
 
+from __future__ import absolute_import
+
 from cement.core import controller
 
 
