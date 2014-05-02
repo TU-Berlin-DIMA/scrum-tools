@@ -339,8 +339,11 @@ class GitHubController(controller.CementBaseController):
             print colored("Skipping repository '%s' (already exists)." % repo_name, 'yellow')
 
         for team in teams:
-            print "adding repo '%s/%s' to team %s" % (org.login, repo_name, team.name)
-            team.add_repo('%s/%s' % (org.login, repo_name))
+            print colored("Adding repo '%s/%s' to team '%s'..." % (org.login, repo_name, team.name), 'green'),
+            if team.add_repo('%s/%s' % (org.login, repo_name)):
+                print colored('OK', 'green', attrs=['bold'])
+            else:
+                print colored('Not OK', 'red', attrs=['bold'])
 
     @staticmethod
     def __delete_repo(repo_name, repos):

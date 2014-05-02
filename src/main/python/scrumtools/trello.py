@@ -123,8 +123,11 @@ class TrelloController(controller.CementBaseController):
 
             print colored("Validating Trello account '%s' for user '%s'..." % (u[key_trello], u[key_id]), 'green'),
             try:
-                tl.members.get(u[key_trello])
-                print colored('OK', 'green', attrs=['bold'])
+                trello_user = tl.members.get(u[key_trello])
+                if u[key_trello] != trello_user['username']:
+                    print colored('OK (but should be %s)' % trello_user['username'], 'yellow', attrs=['bold'])
+                else:
+                    print colored('OK', 'green', attrs=['bold'])
 
             except RequestException:
                 print colored('Not OK', 'red', attrs=['bold'])

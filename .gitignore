@@ -1,5 +1,6 @@
 # Idea project files
-.idea
+.idea*
+*.iml
 
 # Config file
 .scrum-tools.conf
