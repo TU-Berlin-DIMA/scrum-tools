@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='scrum-tools',
-    version='0.1.0',
+    version='0.1.1',
     author=u'Alexander Alexandrov',
     author_email='alexander.alexandrov@tu-berlin.de',
     packages=['scrumtools'],
@@ -11,7 +11,7 @@ setup(
     install_requires=[
         'argcomplete>=0.8.0',  # Argcomplete argument completion
         'cement>=2.2',  # Cement CLI application framework
-        'github3.py>=0.8.2',  # Github API client
+        'github3.py>=0.9.2',  # Github API client
         'termcolor>=1.1.0',  # Termcolor colored terminal
         'trello>=0.9.1',  # Trello API client
     ],

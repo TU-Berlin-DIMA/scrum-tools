@@ -361,8 +361,7 @@ class GitHubController(controller.CementBaseController):
     def __create_team(org, team_name, repo_names, premission, teams):
         if not team_name in teams:
             print colored("Creating team '%s'..." % team_name, 'green'),
-            team = org.create_team(name=team_name, repo_names=repo_names, permissions=premission)
-            team.edit(team_name, permission=premission)  # bypass a bug in create_team
+            team = org.create_team(name=team_name, repo_names=repo_names, permission=premission)
             if team:
                 teams[team_name] = team
                 print colored('OK', 'green', attrs=['bold'])
@@ -390,7 +389,7 @@ class GitHubController(controller.CementBaseController):
         # add missing team members
         for u in members_exp - members_act:
             print colored("Adding '%s' to team '%s'..." % (u, team.name), 'green'),
-            if team.add_member(u):
+            if team.invite(u):
                 print colored('OK', 'green', attrs=['bold'])
             else:
                 print colored('Not OK', 'red', attrs=['bold'])
