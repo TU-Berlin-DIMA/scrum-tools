@@ -28,8 +28,9 @@ users_file                    = /path/to/users.csv
 users_file_skip_first         = true
 users_file_delimiter          = ;
 users_file_escape_char        =
-users_schema                  = Username;Name;Surname;E-Mail;Group;Github;Trello
-users_schema_key_id           = Username
+users_schema                  = ID;Username;Name;Surname;E-Mail;Group;Github;Trello
+users_schema_key_id           = ID
+users_schema_key_username     = Username
 users_schema_key_group        = Group
 users_schema_key_github       = Github
 users_schema_key_trello       = Trello
@@ -54,6 +55,10 @@ board_admins                  = IMPRO-3.SS14.Admins
 board_pattern                 = IMPRO-3.SS14.G%02d
 board_admins_group            = 0
 board_lists                   = Product Backlog;To Do;Doing;Done
+
+[evaltool]
+course_id                     = 1000 
+group_pattern                 = IMPRO-3.SS14.G%02d
 ```
 
 You gen then get the list of the available commans like this:

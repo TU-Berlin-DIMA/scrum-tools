@@ -97,6 +97,7 @@ class UserRepository:
         self.__schema = config.get('core', 'users_schema')
         self.__key_group = config.get('core', 'users_schema_key_group')
         self.__key_id = config.get('core', 'users_schema_key_id')
+        self.__key_username = config.get('core', 'users_schema_key_username')
         self.__key_github = config.get('core', 'users_schema_key_github')
         self.__key_trello = config.get('core', 'users_schema_key_trello')
 
@@ -109,7 +110,7 @@ class UserRepository:
         self.__users.sort(key=lambda x: x[self.__key_group])
 
         # create groups
-        self.__groups = sorted(set([u[self.__key_group] for u in self.__users if u[self.__key_group] != '']))
+        self.__groups = ["%d" % g for g in sorted(set([int(u[self.__key_group]) for u in self.__users if int(u[self.__key_group]) != '']))]
 
     def users(self, f=None):
         for u in self.__users:

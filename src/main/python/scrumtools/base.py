@@ -34,8 +34,9 @@ class BaseController(controller.CementBaseController):
             users_file_delimiter=';',
             users_file_escape_char=None,
             # input schema
-            users_schema='ID;Group;Github;Trello',
+            users_schema='ID;Username;Group;Github;Trello',
             users_schema_key_id='ID',
+            users_schema_key_username='Username',
             users_schema_key_group='Group',
             users_schema_key_github='Github',
             users_schema_key_trello='Trello',

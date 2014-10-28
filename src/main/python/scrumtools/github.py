@@ -97,7 +97,7 @@ class GitHubController(controller.CementBaseController):
             raise error.ConfigError("Missing config parameter 'github.auth_id' and/or 'github.auth_token'! "
                                     "Please run 'scrum-tools github authorize' first! ")
 
-        key_id = self.app.config.get('core', 'users_schema_key_id')
+        key_username = self.app.config.get('core', 'users_schema_key_username')
         key_github = self.app.config.get('core', 'users_schema_key_github')
 
         user_repository = data.UserRepository(self.app.config)
@@ -106,10 +106,10 @@ class GitHubController(controller.CementBaseController):
 
         for u in user_repository.users():
             if not u[key_github]:
-                cprint("Skipping empty GitHub account for user '%s'." % u[key_id], 'yellow', file=sys.stdout)
+                cprint("Skipping empty GitHub account for user '%s'." % u[key_username], 'yellow', file=sys.stdout)
                 continue
 
-            print colored("Validating GitHub account '%s' for user '%s'..." % (u[key_github], u[key_id]), 'green'),
+            print colored("Validating GitHub account '%s' for user '%s'..." % (u[key_github], u[key_username]), 'green'),
             try:
                 if gh.user(u[key_github]):
                     print colored('OK', 'green', attrs=['bold'])

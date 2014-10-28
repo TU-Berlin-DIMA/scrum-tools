@@ -108,7 +108,7 @@ class TrelloController(controller.CementBaseController):
             raise error.ConfigError("Missing config parameter 'trello.auth_key' and/or 'trello.auth_token'! "
                                     "Please run 'scrum-tools trello authorize' first! ")
 
-        key_id = self.app.config.get('core', 'users_schema_key_id')
+        key_username = self.app.config.get('core', 'users_schema_key_username')
         key_trello = self.app.config.get('core', 'users_schema_key_trello')
 
         # get the users
@@ -118,10 +118,10 @@ class TrelloController(controller.CementBaseController):
 
         for u in user_repository.users():
             if not u[key_trello]:
-                cprint("Skipping empty Trello account for user '%s'." % u[key_id], 'yellow', file=sys.stdout)
+                cprint("Skipping empty Trello account for user '%s'." % u[key_username], 'yellow', file=sys.stdout)
                 continue
 
-            print colored("Validating Trello account '%s' for user '%s'..." % (u[key_trello], u[key_id]), 'green'),
+            print colored("Validating Trello account '%s' for user '%s'..." % (u[key_trello], u[key_username]), 'green'),
             try:
                 trello_user = tl.members.get(u[key_trello])
                 if u[key_trello] != trello_user['username']:
