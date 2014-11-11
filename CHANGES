@@ -1,8 +1,13 @@
-????-??-?? Alexander Alexandrov <alexander.alexandrov@tu-berlin.de> -- 0.0.2
+????-??-?? Alexander Alexandrov <alexander.alexandrov@tu-berlin.de> -- 0.1.2
 
+2014-11-11 Alexander Alexandrov <alexander.alexandrov@tu-berlin.de> -- 0.1.1
+
+    * Added evaltool controller.
+    * Sending user invites instead of forcefully adding them to GitHub groups (reflects changes in the GitHub API).
+    * Migrated to github3 0.9.2.
     * 'github create-repos' - fixed color output.
     * 'trello validate-users' - warns if the account is valid, but the ID is not the username (e.g. an email).
 
-2014-04-23 Alexander Alexandrov <alexander.alexandrov@tu-berlin.de> -- 0.0.1
+2014-04-23 Alexander Alexandrov <alexander.alexandrov@tu-berlin.de> -- 0.1.0
 
     * Initial release.
